@@ -1,7 +1,10 @@
 // Vite config: serves api/*.js as dev endpoints (same handlers Vercel runs in production).
 import { existsSync } from 'node:fs'
 import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { defineConfig, loadEnv } from 'vite'
+
+const page = (file) => fileURLToPath(new URL(file, import.meta.url))
 
 function apiDev() {
   return {
@@ -46,4 +49,9 @@ function apiDev() {
 
 export default defineConfig({
   plugins: [apiDev()],
+  build: {
+    rollupOptions: {
+      input: { main: page('./index.html'), checkout: page('./checkout.html') },
+    },
+  },
 })

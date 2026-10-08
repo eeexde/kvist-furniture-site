@@ -1,0 +1,6 @@
+import './styles/tokens.css'
+import './styles/base.css'
+import './styles/nav.css'
+import './styles/footer.css'
+import './styles/checkout.css'
+import './js/checkout-page.js'
