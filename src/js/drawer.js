@@ -37,7 +37,7 @@ export function initDrawer({ reduced } = {}) {
   const cartBtn = $('[data-cart]')
   if (cartBtn) cartBtn.addEventListener('click', () => openDrawer())
   $$('[data-drawer-close]', drawer).forEach((el) => el.addEventListener('click', closeDrawer))
-  drawer.addEventListener('keydown', onKey)
+  document.addEventListener('keydown', onKey, true)
   list.addEventListener('click', onListClick)
 }
 
@@ -89,6 +89,8 @@ function render() {
   foot.hidden = !has
   empty.hidden = has
   subtotalEl.textContent = formatPrice(cart.subtotal())
+  // A re-render (or a click on plain panel text) can drop focus to <body>; keep it inside the modal.
+  if (isOpen && !panel.contains(document.activeElement)) closeBtn.focus({ preventScroll: true })
 }
 
 /* ---------- editing ---------- */
@@ -124,7 +126,13 @@ function focusables() {
   return $$('a[href], button:not([disabled])', panel).filter((el) => !el.closest('[hidden]'))
 }
 
+/** True when the element can actually receive focus (connected and rendered). */
+function usable(el) {
+  return !!el && el.isConnected && el.getClientRects().length > 0
+}
+
 function onKey(e) {
+  if (!isOpen) return
   if (e.key === 'Escape') {
     e.preventDefault()
     e.stopPropagation()
@@ -136,7 +144,10 @@ function onKey(e) {
   if (!f.length) return
   const first = f[0]
   const last = f[f.length - 1]
-  if (e.shiftKey && document.activeElement === first) {
+  if (!panel.contains(document.activeElement)) {
+    e.preventDefault()
+    first.focus()
+  } else if (e.shiftKey && document.activeElement === first) {
     e.preventDefault()
     last.focus()
   } else if (!e.shiftKey && document.activeElement === last) {
@@ -148,8 +159,10 @@ function onKey(e) {
 export function openDrawer() {
   if (!drawer || isOpen) return
   isOpen = true
+  const active = document.activeElement
+  const cartBtn = $('[data-cart]')
+  opener = !active || active === document.body || drawer.contains(active) ? cartBtn : active
   closeMenu()
-  opener = document.activeElement
   drawer.hidden = false
   lockScroll('drawer')
   if (tl) tl.kill()
@@ -178,7 +191,8 @@ export function closeDrawer() {
   const done = () => {
     drawer.hidden = true
     unlockScroll('drawer')
-    if (opener && opener.isConnected && opener.focus) opener.focus({ preventScroll: true })
+    const back = usable(opener) ? opener : $('[data-cart]')
+    if (back && back.focus) back.focus({ preventScroll: true })
   }
   if (tl) tl.kill()
   if (reducedMode) return done()
