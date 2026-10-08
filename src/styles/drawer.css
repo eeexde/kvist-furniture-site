@@ -1,0 +1,162 @@
+/* ==========================================================================
+   Cart drawer — slides in from the right over a blurred scrim.
+   ========================================================================== */
+
+.drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+}
+.drawer[hidden],
+.drawer [hidden] { display: none !important; }
+
+.drawer__scrim {
+  position: absolute;
+  inset: 0;
+  background: #1C211D66;
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+.drawer__panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  width: min(440px, 100%);
+  background: var(--c-paper);
+  color: var(--c-ink);
+  box-shadow: -30px 0 60px -30px #1C211D40;
+}
+
+.drawer__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+  padding: var(--s-5) var(--s-5) var(--s-4);
+  border-bottom: 1px solid var(--c-line);
+}
+.drawer__h { font-size: clamp(1.8rem, 1.5rem + 1vw, 2.4rem); }
+
+.drawer__close {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  transition: background-color .3s var(--ease-out), rotate .5s var(--ease-out);
+}
+.drawer__close:hover { background: #1C211D0F; rotate: 90deg; }
+
+/* ---- Items ------------------------------------------------------------ */
+.drawer__list {
+  flex: 1;
+  margin: 0;
+  padding: var(--s-2) var(--s-5);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  list-style: none;
+}
+
+.drawer__item {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr) auto;
+  gap: var(--s-4);
+  align-items: start;
+  padding-block: var(--s-4);
+  border-bottom: 1px solid var(--c-line);
+}
+.drawer__item:last-child { border-bottom: 0; }
+
+.drawer__thumb {
+  display: block;
+  width: 72px;
+  height: 72px;
+  border-radius: var(--r-thumb);
+  object-fit: cover;
+  background: var(--c-ph-a);
+}
+
+.drawer__name { margin: 0; font-weight: 600; line-height: 1.25; }
+.drawer__unit { margin: 2px 0 0; color: var(--c-muted); font-size: var(--fs-small); }
+
+.qty {
+  display: inline-flex;
+  align-items: center;
+  margin-top: var(--s-3);
+  border: 1px solid var(--c-line-strong);
+  border-radius: var(--r-pill);
+}
+.qty__btn {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--r-pill);
+  background: transparent;
+  color: inherit;
+  font: 400 20px / 1 var(--font-body);
+  cursor: pointer;
+  transition: background-color .3s var(--ease-out);
+}
+.qty__btn:hover:not(:disabled) { background: #1C211D0F; }
+.qty__btn:disabled { color: var(--c-line-strong); cursor: not-allowed; }
+.qty__n {
+  min-width: 2ch;
+  text-align: center;
+  font: 500 var(--fs-small) / 1 var(--font-mono);
+}
+
+.drawer__end {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--s-2);
+}
+.drawer__line { margin: 0; font-weight: 600; }
+.drawer__remove {
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--c-muted);
+  font: 500 var(--fs-label) / 1 var(--font-mono);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-offset: .3em;
+  cursor: pointer;
+  transition: color .3s var(--ease-out);
+}
+.drawer__remove:hover { color: var(--c-ochre-ink); }
+
+/* ---- Empty + footer --------------------------------------------------- */
+.drawer__empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s-4);
+  padding: var(--s-6) var(--s-5);
+  color: var(--c-muted);
+}
+.drawer__empty p { margin: 0; }
+
+.drawer__foot {
+  padding: var(--s-5);
+  border-top: 1px solid var(--c-line);
+  background: var(--c-bg);
+}
+.drawer__sum { display: grid; gap: var(--s-2); margin: 0 0 var(--s-5); }
+.drawer__sum div { display: flex; justify-content: space-between; gap: var(--s-4); }
+.drawer__sum dt { color: var(--c-muted); }
+.drawer__sum dd { margin: 0; font-weight: 600; }
+.drawer__go { width: 100%; justify-content: space-between; }

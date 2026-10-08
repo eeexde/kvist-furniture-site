@@ -11,6 +11,7 @@ import { initReveals } from './reveals.js'
 import { initPinned } from './pinned.js'
 import { initCart } from './cart.js'
 import { initMagnetic } from './magnetic.js'
+import { initDrawer, openDrawer, consumeCartParam } from './drawer.js'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -130,6 +131,7 @@ function boot() {
   // Cancels the CSS failsafe that reveals the hero if this bundle never runs.
   root.classList.add('booted')
   const reduced = prefersReduced()
+  const wantsCart = consumeCartParam()
 
   // The intro expects to start at the top; deep links keep their target.
   if (!reduced && !location.hash) {
@@ -168,6 +170,7 @@ function boot() {
       heroReady()
       enableHeaderAutoHide()
       initMagnetic()
+      if (wantsCart) openDrawer()
     } catch (err) {
       fail(err)
     }
@@ -189,7 +192,11 @@ function boot() {
       initTicker({ reduced })
       initNav({ reduced })
       initCart({ reduced })
-      if (reduced) showStatic()
+      initDrawer({ reduced })
+      if (reduced) {
+        showStatic()
+        if (wantsCart) openDrawer()
+      }
       else initIntro({ ctx, onDone: onIntroDone, onError: fail })
     })
   } catch (err) {
