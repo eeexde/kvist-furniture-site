@@ -39,6 +39,7 @@
           <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 11.1a2 2 0 0 1-2 1.9H8.2a2 2 0 0 1-2-1.9L5 8Z"/><path d="M9 10V7a3 3 0 0 1 6 0v3"/></svg>
           <span class="cart__n" data-cart-n aria-hidden="true">0</span>
         </button>
+        <p class="sr" aria-live="polite" data-cart-live></p>
       </div>
 
       <button class="nav__burger" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Menu">
@@ -131,28 +132,28 @@
             <h3>Stubbe Oak Stool</h3>
             <p class="product__price"><strong>$220</strong> <s><span class="sr">was </span>$260</s></p>
             <p class="product__stock product__stock--low">8 left in stock</p>
-            <button class="product__add" type="button" data-add aria-label="Add Stubbe Oak Stool to cart">+</button>
+            <button class="product__add" type="button" data-add data-id="stubbe-stool" aria-label="Add Stubbe Oak Stool to cart">+</button>
           </article>
           <article class="product">
             <div class="product__media ph ph--spot" data-ph="PENDANT"><img src="/images/arr-pendant.webp" alt="Sky Paper Pendant" width="395" height="395" loading="lazy" decoding="async"></div>
             <h3>Sky Paper Pendant</h3>
             <p class="product__price"><strong>$180</strong></p>
             <p class="product__stock">15 left in stock</p>
-            <button class="product__add" type="button" data-add aria-label="Add Sky Paper Pendant to cart">+</button>
+            <button class="product__add" type="button" data-add data-id="sky-pendant" aria-label="Add Sky Paper Pendant to cart">+</button>
           </article>
           <article class="product">
             <div class="product__media ph ph--spot" data-ph="CUSHION"><img src="/images/arr-cushion.webp" alt="Lin Linen Cushion" width="346" height="346" loading="lazy" decoding="async"></div>
             <h3>Lin Linen Cushion</h3>
             <p class="product__price"><strong>$58</strong> <s><span class="sr">was </span>$72</s></p>
             <p class="product__stock">30 left in stock</p>
-            <button class="product__add" type="button" data-add aria-label="Add Lin Linen Cushion to cart">+</button>
+            <button class="product__add" type="button" data-add data-id="lin-cushion" aria-label="Add Lin Linen Cushion to cart">+</button>
           </article>
           <article class="product">
             <div class="product__media ph ph--spot" data-ph="BOWL"><img src="/images/arr-bowl.webp" alt="Skål Ceramic Bowl" width="426" height="426" loading="lazy" decoding="async"></div>
             <h3>Skål Ceramic Bowl</h3>
             <p class="product__price"><strong>$44</strong></p>
             <p class="product__stock">21 left in stock</p>
-            <button class="product__add" type="button" data-add aria-label="Add Skål Ceramic Bowl to cart">+</button>
+            <button class="product__add" type="button" data-add data-id="skal-bowl" aria-label="Add Skål Ceramic Bowl to cart">+</button>
           </article>
         </div>
       </div>
@@ -198,6 +199,7 @@
             <div class="lcard__cap">
               <h3>Fjell Lounge Chair</h3>
               <p class="product__price"><strong>$1,290</strong> <s><span class="sr">was </span>$1,490</s></p>
+              <button class="product__add" type="button" data-add data-id="fjell-chair" aria-label="Add Fjell Lounge Chair to cart">+</button>
             </div>
           </article>
           <article class="lcard">
@@ -208,6 +210,7 @@
             <div class="lcard__cap">
               <h3>Myk Wool Throw</h3>
               <p class="product__price"><strong>$148</strong> <s><span class="sr">was </span>$180</s></p>
+              <button class="product__add" type="button" data-add data-id="myk-throw" aria-label="Add Myk Wool Throw to cart">+</button>
             </div>
           </article>
           <article class="lcard">
@@ -218,6 +221,7 @@
             <div class="lcard__cap">
               <h3>Glød Table Lamp</h3>
               <p class="product__price"><strong>$240</strong></p>
+              <button class="product__add" type="button" data-add data-id="glod-lamp" aria-label="Add Glød Table Lamp to cart">+</button>
             </div>
           </article>
         </div>
