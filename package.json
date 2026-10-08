@@ -14,7 +14,9 @@
     "vitest": "^2.1.9"
   },
   "dependencies": {
+    "@stripe/stripe-js": "^10.0.0",
     "gsap": "^3.12.5",
-    "lenis": "^1.1.13"
+    "lenis": "^1.1.13",
+    "stripe": "^23.0.0"
   }
 }
