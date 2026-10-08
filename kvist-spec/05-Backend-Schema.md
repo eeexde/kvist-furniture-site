@@ -71,5 +71,6 @@ erDiagram
 ## 5. Data Storage
 - **Hosting:** files live in Git and are served from the Vercel CDN, with the Git history acting as the backup.
 - **Images:** `public/images/*.webp` (and `.jpg` for `og.jpg`). The filenames are fixed (see `IMAGE-PROMPTS.md`), so swapping an image needs no code change.
-- **Retention:** the app stores no orders and no PII server-side. The cart lives in the visitor's localStorage, and the checkout form values are kept only in sessionStorage for the session. Payment data goes straight to Stripe (test mode). Contact happens through the visitor's own mail client.
+- **Retention:** KVIST servers store no orders and no PII. The cart lives in the visitor's localStorage, and the checkout form values are kept only in sessionStorage for the session. Name, email and shipping address are sent to Stripe (test mode) with the PaymentIntent, along with the payment data. Contact happens through the visitor's own mail client.
+- **Build and preview:** `VITE_STRIPE_PUBLISHABLE_KEY` is inlined at build time, so changing it on Vercel needs a redeploy. `vite preview` does not serve `/api`; use `npm run dev` or Vercel.
 - **Future upgrade path:** if a real shop is needed, add Shopify Storefront API or Supabase (`products`, `categories`, `orders` tables) and move from Stripe test mode to live, with webhooks for order storage. This would replace the hardcoded markup with fetched data. Out of scope for v1.

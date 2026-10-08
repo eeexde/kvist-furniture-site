@@ -18,7 +18,7 @@ function boot() {
   } catch (err) {
     console.error('[KVIST] Reveal init failed.', err)
   }
-  initMagnetic()
+  if (!reduced) initMagnetic()
   // base.css hides the header (translateY(-100%)) until the landing intro runs; bring it in here.
   // No clearProps: the inline transform must stay so it keeps overriding that CSS rule.
   if (!reduced) gsap.fromTo('[data-nav]', { yPercent: -100, y: 0 }, { yPercent: 0, y: 0, duration: 0.8, ease: 'power3.out' })

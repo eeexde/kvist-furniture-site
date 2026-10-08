@@ -77,6 +77,9 @@ export async function initCheckout({ reduced } = {}) {
   bindForm()
   setupSummaryToggle()
   cart.onChange(onCartChange)
+  window.addEventListener('pageshow', (e) => {
+    if (e.persisted) location.reload()
+  })
 
   const params = new URLSearchParams(location.search)
   const returned = params.get('payment_intent_client_secret')
@@ -127,6 +130,7 @@ function onCartChange() {
   if (returning || current === 'done') return
   if (!cart.count()) {
     clearTimeout(refreshTimer)
+    refreshTimer = 0
     pendingRefresh = false
     return show('empty')
   }
@@ -138,6 +142,7 @@ function onCartChange() {
   renderSummary()
   // The amount changed: re-create the PaymentIntent once the edits settle.
   clearTimeout(refreshTimer)
+  refreshTimer = 0
   if (!PK.startsWith('pk_test_')) return
   if (busy) pendingRefresh = true // never destroy the element mid-confirmation
   else refreshTimer = setTimeout(refreshPayment, 300)
@@ -228,6 +233,7 @@ function bindForm() {
 /* ---------- payment ---------- */
 
 function refreshPayment() {
+  refreshTimer = 0
   if (busy) pendingRefresh = true
   else setupPayment()
 }
@@ -307,6 +313,9 @@ async function setupPayment() {
     paymentEl.on('ready', () => {
       if (token === intentToken) setReady(true)
     })
+    paymentEl.on('loaderror', (e) => {
+      if (token === intentToken) showNotice((e && e.error && e.error.message) || 'The payment form could not load.', { retry: true })
+    })
     paymentEl.mount('#payment-element')
     intentAmount = amount
     updatePayLabel()
@@ -337,6 +346,15 @@ async function onSubmit(e) {
   if (busy || !ready) return
   showPayError('')
 
+  if (refreshTimer || intentAmount !== cart.subtotal()) {
+    // The cart changed after the intent was created: never confirm the old amount.
+    clearTimeout(refreshTimer)
+    refreshTimer = 0
+    setupPayment()
+    showPayError('Your cart changed — check the total and press Pay again.')
+    return
+  }
+
   const values = readValues()
   const errors = validate(values)
   Object.keys(Object.fromEntries(new FormData(form))).forEach((k) => setFieldError(k, errors[k]))
@@ -346,12 +364,6 @@ async function onSubmit(e) {
     return
   }
 
-  if (refreshTimer) {
-    // A debounced refresh must not destroy the element mid-confirmation.
-    clearTimeout(refreshTimer)
-    refreshTimer = 0
-    pendingRefresh = true
-  }
   setBusy(true)
   saveSnapshot()
   let error

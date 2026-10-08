@@ -86,7 +86,7 @@ flowchart TD
 |---|---|---|---|
 | Any image slot | n/a | `.ph` gradient + mono label stays visible, the `<img>` has `opacity:0` and gets class `is-loaded` on `load` (fades in) | `error` event: the img is removed and the placeholder stays. No broken-image icon. |
 | Hero intro | — | Title, copy and rail are hidden only while `html.js` is set. Intro starts after `document.fonts.ready` + hero img load, or a 2.5s timeout, whichever comes first | If GSAP throws, a `try/catch` removes `html.js` so all content shows |
-| Cart | Counter shows `0`, no `has-items` class. Drawer and checkout show an empty state. | Checkout shows a loading state while the PaymentIntent is created | Notice with "Try again" if the API fails; "couldn't confirm" notice (URL and cart kept) if the result can't be checked |
+| Cart | Counter shows `0`, no `has-items` class. Drawer and checkout show an empty state. | Checkout keeps Pay disabled until the payment form is ready | Setup failures show a notice with "Try again"; "couldn't confirm" notice (URL and cart kept) if the result can't be checked |
 | Reduced motion | — | No intro. Everything is visible immediately and counters are set to their final value | — |
 | Resize | Width change triggers `ScrollTrigger.refresh()`. Height-only changes (mobile URL bar) are ignored | — | — |
 | Hash on load (`/#best`) | — | After `load`, jump to the anchor without animation | — |
