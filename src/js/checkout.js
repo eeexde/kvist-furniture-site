@@ -9,6 +9,7 @@ import { COUNTRIES, validate, toShipping, orderRef, resultView } from './checkou
 
 const PK = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || ''
 const SNAPSHOT_KEY = 'kvist-last-order'
+const CLEARED_KEY = 'kvist-cleared-pi'
 
 const APPEARANCE = {
   theme: 'flat',
@@ -59,6 +60,9 @@ let intentToken = 0
 let busy = false
 let ready = false
 let refreshTimer = 0
+let pendingRefresh = false // cart changed while a confirmation was in flight
+let returning = false // handleReturn is running: ignore cart changes
+let held = false // result could not be checked: keep the URL, no payment setup
 
 export async function initCheckout({ reduced } = {}) {
   page = $('[data-checkout]')
@@ -120,13 +124,23 @@ function startForm({ notice, values } = {}) {
 }
 
 function onCartChange() {
-  if (current === 'done') return
-  if (!cart.count()) return show('empty')
+  if (returning || current === 'done') return
+  if (!cart.count()) {
+    clearTimeout(refreshTimer)
+    pendingRefresh = false
+    return show('empty')
+  }
+  if (held) {
+    if (current === 'form') renderSummary()
+    return
+  }
   if (current === 'empty' || current === null) return startForm()
   renderSummary()
   // The amount changed: re-create the PaymentIntent once the edits settle.
   clearTimeout(refreshTimer)
-  if (PK.startsWith('pk_test_')) refreshTimer = setTimeout(setupPayment, 300)
+  if (!PK.startsWith('pk_test_')) return
+  if (busy) pendingRefresh = true // never destroy the element mid-confirmation
+  else refreshTimer = setTimeout(setupPayment, 300)
 }
 
 /* ---------- summary ---------- */
@@ -208,10 +222,18 @@ function bindForm() {
     setFieldError(name, validate(readValues())[name])
   })
   const retry = $('[data-pay-retry]', page)
-  if (retry) retry.addEventListener('click', setupPayment)
+  if (retry) retry.addEventListener('click', onRetry)
 }
 
 /* ---------- payment ---------- */
+
+function onRetry() {
+  if (held) return location.reload()
+  // The retry button hides itself; park focus on the payment area first.
+  const target = $('#payment-element', page)
+  if (target) target.focus()
+  setupPayment()
+}
 
 function updatePayLabel() {
   if (!payLabel) return
@@ -321,16 +343,27 @@ async function onSubmit(e) {
 
   setBusy(true)
   saveSnapshot()
-  const { error } = await stripe.confirmPayment({
-    elements,
-    confirmParams: {
-      return_url: `${location.origin}${location.pathname}`,
-      receipt_email: values.email.trim(),
-      shipping: toShipping(values),
-    },
-  })
-  // Only reached when confirmation fails before a redirect.
-  setBusy(false)
+  let error
+  try {
+    ;({ error } = await stripe.confirmPayment({
+      elements,
+      confirmParams: {
+        return_url: `${location.origin}${location.pathname}`,
+        receipt_email: values.email.trim(),
+        shipping: toShipping(values),
+      },
+    }))
+  } catch (err) {
+    console.error('[KVIST] Payment confirmation threw.', err)
+    error = err || new Error('Payment confirmation failed')
+  } finally {
+    // Only reached when confirmation fails before a redirect.
+    setBusy(false)
+    if (pendingRefresh) {
+      pendingRefresh = false
+      setupPayment()
+    }
+  }
   const userFacing =
     error &&
     (error.type === 'card_error' ||
@@ -343,23 +376,51 @@ async function onSubmit(e) {
 
 async function handleReturn(clientSecret) {
   if (!PK.startsWith('pk_test_')) return startForm()
+  returning = true
   try {
-    stripe = await loadStripe(PK)
-    const { paymentIntent, error } = await stripe.retrievePaymentIntent(clientSecret)
-    const view = error || !paymentIntent ? 'failed' : resultView(paymentIntent.status)
-    const snap = readSnapshot()
+    let paymentIntent = null
+    try {
+      stripe = await loadStripe(PK)
+      if (!stripe) throw new Error('Stripe.js could not load')
+      const res = await stripe.retrievePaymentIntent(clientSecret)
+      if (res.error || !res.paymentIntent) throw res.error || new Error('No PaymentIntent returned')
+      paymentIntent = res.paymentIntent
+    } catch (err) {
+      // Could not check the result: keep the URL (the evidence) and the cart.
+      console.error('[KVIST] Could not read payment result.', err)
+      held = true
+      show('form')
+      renderSummary()
+      showNotice('We couldn’t confirm your payment yet. Check your connection and refresh this page.', { retry: true })
+      return
+    }
 
+    const view = resultView(paymentIntent.status)
+    const snap = readSnapshot()
     if (view === 'failed') {
       history.replaceState(null, '', location.pathname)
       return startForm({ notice: 'That payment didn’t go through. Try another card.', values: snap && snap.values })
     }
-    // Keep the URL so a refresh shows this result again.
-    cart.clear()
+    // Keep the URL so a refresh shows this result again, but only clear the cart once per payment.
+    if (readCleared() !== paymentIntent.id) {
+      cart.clear()
+      try {
+        sessionStorage.setItem(CLEARED_KEY, paymentIntent.id)
+      } catch {
+        /* ignore */
+      }
+    }
     renderDone(view, paymentIntent, snap)
-  } catch (err) {
-    console.error('[KVIST] Could not read payment result.', err)
-    history.replaceState(null, '', location.pathname)
-    startForm({ notice: 'We couldn’t confirm that payment. Please try again.' })
+  } finally {
+    returning = false
+  }
+}
+
+function readCleared() {
+  try {
+    return sessionStorage.getItem(CLEARED_KEY)
+  } catch {
+    return null
   }
 }
 

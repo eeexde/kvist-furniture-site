@@ -97,11 +97,11 @@
           <fieldset class="co__block" data-rise>
             <legend class="co__legend"><span class="co__step">03</span> Payment</legend>
             <p class="co__test">Test card <code>4242 4242 4242 4242</code> · any future date · any CVC</p>
-            <div class="co__notice" data-pay-notice hidden>
+            <div class="co__notice" data-pay-notice role="status" hidden>
               <p data-pay-notice-text></p>
               <button class="btn btn--dark btn--sm" type="button" data-pay-retry hidden>Try again</button>
             </div>
-            <div class="co__payment" id="payment-element"></div>
+            <div class="co__payment" id="payment-element" tabindex="-1"></div>
           </fieldset>
 
           <p class="co__error" role="alert" data-pay-error></p>
