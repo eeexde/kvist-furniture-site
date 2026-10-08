@@ -96,7 +96,7 @@ Prices are the current sale prices on the page. Plain ESM with no browser APIs, 
 - Storage key `kvist-cart`, value `[{ id, qty }]`.
 - API: `getItems()`, `add(id)`, `setQty(id, qty)`, `remove(id)`, `clear()`, `count()`, `subtotal()`, `onChange(fn)`.
 - `qty` clamped to `1..MAX_QTY`; `setQty(id, 0)` removes. Unknown ids are ignored on add and dropped on load.
-- Every mutation saves and dispatches `cart:change` on `window`. A `storage` event listener syncs other tabs.
+- Every mutation saves and notifies `onChange` subscribers with `{ type }` (`add`, `set`, `remove`, `clear`, `sync`). A `storage` event listener calls `reload()` to sync other tabs.
 - All `localStorage` access in try/catch; on failure the cart works in memory for the session.
 
 ### 4.3 Add to cart — `cart.js` changes
