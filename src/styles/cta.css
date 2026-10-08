@@ -1,0 +1,53 @@
+/* ==========================================================================
+   CTA — parallax photo with a floating paper card
+   The bg overhangs 10% top/bottom so JS can scrub yPercent −8 → 8.
+   ========================================================================== */
+
+.cta {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  place-items: center;
+  padding: clamp(110px, 15vw, 220px) var(--gutter);
+  overflow: hidden;
+}
+
+.cta__bg {
+  position: absolute;
+  inset: -10% 0;
+  z-index: -2;
+  will-change: transform;
+}
+
+/* Keep the placeholder label visible above the card */
+.cta__bg::after {
+  top: calc(10% + 32px);
+  translate: -50% 0;
+}
+
+.cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, #1C211D14, #1C211D47);
+  pointer-events: none;
+}
+
+.cta__card {
+  position: relative;
+  width: min(100%, 700px);
+  padding: clamp(36px, 5vw, 68px) clamp(24px, 5vw, 72px);
+  border-radius: var(--r-cta);
+  background: var(--c-paper);
+  box-shadow: var(--shadow-cta);
+  text-align: center;
+}
+
+.cta__card h2 { margin-bottom: 20px; }
+
+.cta__card p {
+  max-width: 46ch;
+  margin: 0 auto 32px;
+  color: var(--c-muted);
+}

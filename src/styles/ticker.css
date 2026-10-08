@@ -1,0 +1,37 @@
+/* ==========================================================================
+   Ticker — brand promises marquee
+   Spacing uses margin on every child (not flex gap) so the row is perfectly
+   periodic once JS duplicates its content and wraps at half the width.
+   ========================================================================== */
+
+.ticker {
+  --tk-gap: clamp(20px, 2.6vw, 44px);
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(16px, 1.8vw, 24px);
+  background: var(--c-pine);
+  color: var(--c-cream);
+  border-top: 1px solid #F2EEE51A;
+}
+
+.ticker__row {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  font: 500 clamp(.9rem, .78rem + .55vw, 1.2rem) / 1 var(--font-mono);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  will-change: transform;
+}
+
+.ticker__row > * {
+  flex: none;
+  margin-right: var(--tk-gap);
+}
+
+.ticker__row i {
+  font-style: normal;
+  color: var(--c-ochre);
+  font-size: .9em;
+}

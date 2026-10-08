@@ -1,0 +1,90 @@
+/* ==========================================================================
+   Categories — horizontal chip row
+   Default (no JS / reduced / ≤820): native swipe row with scroll-snap.
+   Desktop with motion: viewport clips and JS scrubs the row's x.
+   ========================================================================== */
+
+.cats {
+  background: var(--c-bg-2);
+  overflow-x: clip;
+}
+
+.cats__h { margin-bottom: clamp(40px, 5vw, 72px); }
+
+.cats__viewport {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--gutter);
+  scrollbar-width: thin;
+  scrollbar-color: var(--c-line-strong) transparent;
+}
+
+.cats__row {
+  display: flex;
+  gap: clamp(14px, 2vw, 28px);
+  width: max-content;
+  padding: 10px var(--gutter) 18px;
+  counter-reset: cat;
+  will-change: transform;
+}
+
+.cat {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: clamp(150px, 17vw, 250px);
+  color: var(--c-ink);
+  text-decoration: none;
+  counter-increment: cat;
+  scroll-snap-align: start;
+}
+
+.cat .ph {
+  display: block;
+  aspect-ratio: 1;
+  border-radius: var(--r-thumb);
+  transition: translate .6s var(--ease-out);
+}
+.cat:hover .ph,
+.cat:focus-visible .ph { translate: 0 -6px; }
+
+.cat__label {
+  position: relative;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+  padding-bottom: 4px;
+  font-weight: 500;
+  font-size: clamp(1rem, .94rem + .3vw, 1.15rem);
+}
+.cat__label::before {
+  content: counter(cat, decimal-leading-zero);
+  color: var(--c-ink);
+  opacity: .72;
+  font: 500 var(--fs-label) / 1 var(--font-mono);
+  letter-spacing: .08em;
+}
+.cat__label::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform .6s var(--ease-out);
+}
+.cat:hover .cat__label::after,
+.cat:focus-visible .cat__label::after { transform: scaleX(1); }
+
+/* Desktop + JS motion: JS drives the row, so clip instead of scroll */
+@media (min-width: 821px) {
+  html.js:not(.reduced) .cats__viewport {
+    overflow: hidden;
+    scroll-snap-type: none;
+  }
+}

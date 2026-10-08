@@ -1,0 +1,84 @@
+/* ==========================================================================
+   Immerse — full-bleed interior with stacked display words.
+   Section is a pine stage so the frame can start scaled down (JS: .52 → 1)
+   and the words stay legible whether they sit on photo or pine.
+   ========================================================================== */
+
+.immerse {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  min-height: 100svh;
+  overflow: hidden;
+  background: var(--c-pine);
+  color: var(--c-cream);
+}
+
+.immerse__frame {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  will-change: transform;
+}
+
+.immerse__media {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+}
+
+/* Keep the placeholder label clear of the words */
+.immerse__media::after {
+  top: auto;
+  bottom: 28px;
+  translate: -50% 0;
+}
+
+/* Soft shade for word legibility */
+.immerse__frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    radial-gradient(60% 55% at 50% 50%, #1C211D4D, #1C211D00 75%),
+    linear-gradient(180deg, #1C211D1A, #1C211D59);
+  pointer-events: none;
+}
+
+.immerse__words {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .04em;
+  padding-inline: var(--gutter);
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--fs-immerse);
+  line-height: .92;
+  letter-spacing: .01em;
+  text-align: center;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.immerse__words span {
+  display: block;
+  will-change: transform;
+}
+
+/* Middle word set smaller and offset for an editorial rhythm */
+.immerse__words span:nth-child(2) {
+  font-size: .5em;
+  letter-spacing: .3em;
+  padding-left: .3em;     /* optically recentre the tracked word */
+  color: var(--c-cream-muted);
+}

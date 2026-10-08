@@ -1,0 +1,73 @@
+/* ==========================================================================
+   Best sellers — three editorial cards, first one taller.
+   Cards align on their bottom edge so the captions share a baseline and the
+   tops step down like a staircase.
+   ========================================================================== */
+
+.loved__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr) minmax(0, 1fr);
+  align-items: end;
+  gap: clamp(16px, 2.4vw, 36px);
+}
+
+.lcard { position: relative; }
+
+.lcard__mask {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 4.6;
+  border-radius: var(--r-card);
+}
+.lcard:first-child .lcard__mask { aspect-ratio: 4 / 5.2; }
+
+.lcard__media {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+.lcard__media img {
+  transition: opacity .6s var(--ease-out), scale .9s var(--ease-out);
+}
+.lcard:hover .lcard__media img { scale: 1.06; }
+
+.lcard__badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 3;
+  padding: 8px 12px;
+  border-radius: var(--r-pill);
+  background: var(--c-ochre-ink);
+  color: var(--c-cream);
+  font: 500 var(--fs-label) / 1 var(--font-mono);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.lcard__cap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px 16px;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--c-line);
+}
+
+/* ---- Responsive ------------------------------------------------------- */
+@media (max-width: 820px) {
+  .loved__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 40px;
+  }
+  .lcard:first-child { grid-column: 1 / -1; }
+  .lcard:first-child .lcard__mask { aspect-ratio: 16 / 11; }
+}
+
+@media (max-width: 560px) {
+  .loved__grid { grid-template-columns: minmax(0, 1fr); }
+  .lcard .lcard__mask,
+  .lcard:first-child .lcard__mask { aspect-ratio: 4 / 4.4; }
+}

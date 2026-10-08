@@ -1,0 +1,313 @@
+/* ==========================================================================
+   KVIST — Base: reset, layout primitives, type, buttons, placeholders,
+   accessibility helpers and the "hidden until animated" pre-intro states.
+   ========================================================================== */
+
+/* ---- Reset ------------------------------------------------------------ */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-padding-top: var(--nav-h);
+}
+
+/* Native smooth anchor scrolling only when Lenis is not in charge */
+html:not(.js):not(.reduced) { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--c-bg);
+  color: var(--c-ink);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;               /* no horizontal page scroll; clip keeps pins working */
+}
+
+img,
+svg { display: block; max-width: 100%; }
+
+h1, h2, h3, p, figure, blockquote { margin: 0; }
+ul { margin: 0; padding: 0; list-style: none; }
+
+a { color: inherit; }
+
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+::selection { background: var(--c-pine); color: var(--c-cream); }
+
+/* ---- Lenis (recommended base styles) ---------------------------------- */
+html.lenis,
+html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+/* ---- Accessibility helpers -------------------------------------------- */
+:focus-visible {
+  outline: 2px solid var(--c-ochre);
+  outline-offset: 3px;
+}
+main:focus { outline: none; }
+
+.sr {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 200;
+  padding: 12px 20px;
+  border-radius: var(--r-pill);
+  background: var(--c-pine);
+  color: var(--c-cream);
+  font: 500 var(--fs-small) / 1 var(--font-body);
+  text-decoration: none;
+  translate: 0 -200%;
+  transition: translate .4s var(--ease-out);
+}
+.skip:focus,
+.skip:focus-visible { translate: 0 0; }
+
+/* ---- Layout primitives ------------------------------------------------ */
+.wrap {
+  width: min(100% - 2 * var(--gutter), var(--max));
+  margin-inline: auto;
+}
+
+.section {
+  position: relative;
+  padding-block: var(--section-y);
+}
+
+/* Section header: heading left, small button right */
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--s-5) var(--s-6);
+  margin-bottom: clamp(40px, 5vw, 72px);
+}
+
+/* ---- Display type ----------------------------------------------------- */
+h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--fs-h2);
+  line-height: .95;
+  letter-spacing: .005em;
+  text-transform: uppercase;
+}
+
+h3 {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: var(--fs-h3);
+  line-height: 1.2;
+  letter-spacing: -.01em;
+}
+
+/* Line reveals: JS wraps each .line's contents in an inner span and slides it
+   up from yPercent 110. The padding keeps commas/descenders from clipping. */
+[data-lines] .line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: .1em;
+  margin-bottom: -.1em;
+}
+[data-lines] .line > span { display: inline-block; }
+
+/* ---- Buttons ---------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 52px;
+  padding: 6px 6px 6px 26px;
+  border: 0;
+  border-radius: var(--r-pill);
+  font: 500 var(--fs-small) / 1 var(--font-body);
+  letter-spacing: .01em;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color .45s var(--ease-out), color .45s var(--ease-out);
+}
+
+.btn__arrow {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  transition: background-color .45s var(--ease-out);
+}
+.btn__arrow svg { transition: translate .5s var(--ease-out); }
+.btn:hover .btn__arrow svg,
+.btn:focus-visible .btn__arrow svg { translate: 4px 0; }
+
+.btn--light { background: var(--c-cream); color: var(--c-pine); }
+.btn--light .btn__arrow { background: var(--c-pine); color: var(--c-cream); }
+.btn--light:hover { background: #FFFFFF; }
+
+.btn--dark { background: var(--c-pine); color: var(--c-cream); }
+.btn--dark .btn__arrow { background: var(--c-cream); color: var(--c-pine); }
+.btn--dark:hover { background: var(--c-pine-2); }
+
+.btn--sm {
+  min-height: 44px;
+  gap: 12px;
+  padding: 4px 4px 4px 20px;
+}
+.btn--sm .btn__arrow { width: 36px; height: 36px; }
+
+/* Shared price block (products + best sellers) */
+.product__price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 10px;
+  font-size: var(--fs-small);
+  font-weight: 500;
+}
+.product__price strong { font-weight: 600; color: var(--c-ink); }
+.product__price:has(s) strong { color: var(--c-ochre-ink); }
+.product__price s {
+  color: var(--c-muted);
+  text-decoration-thickness: 1px;
+}
+
+/* ==========================================================================
+   Placeholder system (.ph)
+   A tinted block with a mono label. The real <img> fades in once JS marks it
+   .is-loaded; the label then hides. Without JS images show immediately.
+   ========================================================================== */
+.ph {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    repeating-linear-gradient(135deg, #FFFFFF00 0 18px, #FFFFFF14 18px 19px),
+    radial-gradient(120% 90% at 20% 10%, #FFFFFF2E, #FFFFFF00 60%),
+    linear-gradient(135deg, var(--c-ph-a), var(--c-ph-b));
+}
+
+.ph::after {
+  content: attr(data-ph);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  translate: -50% -50%;
+  max-width: calc(100% - 16px);
+  padding: 6px 11px;
+  overflow: hidden;
+  border: 1px solid #1C211D1A;
+  border-radius: var(--r-pill);
+  background: #F7F4EE66;
+  color: var(--c-ph-label);
+  font: 500 11px / 1.2 var(--font-mono);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  pointer-events: none;
+  transition: opacity .4s var(--ease-out);
+}
+
+.ph img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity .6s var(--ease-out);
+}
+
+html.js .ph img:not(.is-loaded) { opacity: 0; }
+.ph img.is-loaded { opacity: 1; }
+.ph:has(img.is-loaded)::after { opacity: 0; }
+
+/* Product cutouts: soft studio spot instead of a flat tint */
+.ph--spot {
+  background:
+    radial-gradient(closest-side at 50% 44%, #FFFFFFB8, #FFFFFF00),
+    radial-gradient(34% 6% at 50% 84%, #1C211D2E, #1C211D00),
+    linear-gradient(180deg, #F4F0E9, #E4DCCF);
+}
+
+.ph--thumb {
+  background:
+    radial-gradient(closest-side at 50% 42%, #FFFFFFA6, #FFFFFF00),
+    linear-gradient(160deg, #F5F1EA, #DDD4C6);
+}
+
+.ph--spot img,
+.ph--thumb img {
+  object-fit: contain;
+  padding: 8%;
+}
+
+/* ==========================================================================
+   Hidden until animated (Implementation Plan §3)
+   Only while JS runs the intro. Reduced motion and no-JS see everything.
+   JS owns every other initial state via gsap.set.
+   ========================================================================== */
+html.js:not(.reduced) .hero__title,
+html.js:not(.reduced) .hero__sub,
+html.js:not(.reduced) .hero__copy .btn,
+html.js:not(.reduced) .proof,
+html.js:not(.reduced) .rail__item,
+html.js:not(.reduced) .hero__tag { opacity: 0; }
+
+html.js:not(.reduced) .hero__panel { transform: scaleX(0); }
+
+html.js:not(.reduced) .hero__floor {
+  transform: scaleX(0);
+  opacity: 0;
+}
+
+html.js:not(.reduced) header.nav { transform: translateY(-100%); }
+
+/* ---- Reduced motion: kill CSS transitions too ------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---- Failsafe: if the JS bundle never boots, reveal the hero after 4s -- */
+@keyframes failsafe-show { to { opacity: 1; transform: none; } }
+html.js:not(.reduced):not(.booted) :is(.hero__title, .hero__sub, .hero__copy .btn, .proof, .rail__item, .hero__tag, .hero__panel, .hero__floor, header.nav) {
+  animation: failsafe-show .6s ease 4s forwards;
+}
+
+/* Anchor targets receive programmatic focus; no ring for mouse users */
+section:focus:not(:focus-visible),
+main:focus:not(:focus-visible) { outline: none; }

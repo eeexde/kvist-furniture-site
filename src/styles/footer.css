@@ -1,0 +1,140 @@
+/* ==========================================================================
+   Footer / contact — pine, giant KVIST wordmark
+   ========================================================================== */
+
+.footer {
+  padding-top: clamp(72px, 9vw, 128px);
+  background: var(--c-pine);
+  color: var(--c-cream);
+  overflow: hidden;
+}
+
+.footer :focus-visible { outline-color: var(--c-cream); }
+
+.footer__top {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, .8fr) minmax(0, 1fr);
+  align-items: start;
+  gap: clamp(36px, 4vw, 64px);
+  padding-bottom: clamp(48px, 6vw, 96px);
+}
+
+/* ---- Talk ------------------------------------------------------------- */
+.footer__talk h2 { margin-bottom: clamp(20px, 2.4vw, 32px); }
+
+.footer__mail {
+  display: inline-block;
+  padding-block: 6px;
+  font-size: clamp(1.3rem, 1rem + 1.3vw, 2.1rem);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -.01em;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: .22em;
+  text-decoration-color: #F2EEE566;
+  transition: text-decoration-color .3s var(--ease-out);
+  overflow-wrap: anywhere;
+}
+.footer__mail:hover { text-decoration-color: var(--c-ochre); }
+
+.footer__tel {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: 6px;
+  color: var(--c-cream-muted);
+  font: 500 var(--fs-small) / 1 var(--font-mono);
+  letter-spacing: .08em;
+  text-decoration: none;
+  transition: color .3s var(--ease-out);
+}
+.footer__tel:hover { color: var(--c-cream); }
+
+/* ---- Links ------------------------------------------------------------ */
+.footer__links {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 24px;
+  padding-top: 8px;
+}
+
+.footer__links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--c-cream-muted);
+  text-decoration: none;
+  transition: color .3s var(--ease-out);
+}
+.footer__links a:hover { color: var(--c-cream); }
+
+/* ---- Image ------------------------------------------------------------ */
+.footer__img {
+  aspect-ratio: 3 / 2;
+  border-radius: var(--r-card);
+}
+
+/* ---- Wordmark --------------------------------------------------------- */
+.footer__word {
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+  padding-top: .04em;
+  border-top: 1px solid #F2EEE526;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--fs-huge);
+  line-height: .9;
+  letter-spacing: 0;
+  user-select: none;
+}
+.footer__word span {
+  display: inline-block;
+  will-change: transform;
+}
+
+/* ---- Bottom bar ------------------------------------------------------- */
+.footer__bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 24px;
+  padding-block: 24px calc(32px + env(safe-area-inset-bottom));
+  border-top: 1px solid #F2EEE526;
+}
+
+.footer__social {
+  display: flex;
+  gap: 8px;
+}
+.footer__social a {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid #F2EEE533;
+  border-radius: 50%;
+  transition: background-color .3s var(--ease-out), color .3s var(--ease-out);
+}
+.footer__social a:hover {
+  background: var(--c-cream);
+  color: var(--c-pine);
+}
+
+.footer__legal {
+  color: var(--c-cream-muted);
+  font-size: var(--fs-small);
+}
+
+/* ---- Responsive ------------------------------------------------------- */
+@media (max-width: 1100px) {
+  .footer__top { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .footer__img { grid-column: 1 / -1; aspect-ratio: 21 / 9; }
+}
+
+@media (max-width: 560px) {
+  .footer__top { grid-template-columns: minmax(0, 1fr); }
+  .footer__img { aspect-ratio: 3 / 2; }
+}

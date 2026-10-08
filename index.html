@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KVIST — Furniture for slow living</title>
+  <meta name="description" content="Solid oak, wool and stoneware pieces made in small batches for homes that take their time. Free delivery over $150 and a 100-night trial." />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script>
+    document.documentElement.classList.add('js');
+    if (matchMedia('(pointer: coarse)').matches) document.documentElement.classList.add('coarse');
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('reduced');
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <!-- ============ HEADER ============ -->
+  <header class="nav" data-nav>
+    <div class="nav__inner">
+      <a class="logo" href="#top" aria-label="KVIST, back to top">KVIST</a>
+
+      <nav class="nav__links" id="nav-links" aria-label="Main">
+        <a href="#top">Home</a>
+        <a href="#arrivals">Shop</a>
+        <a href="#best">Best sellers</a>
+        <a href="#about">About us</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <div class="nav__tools">
+        <button class="icon search" type="button" aria-label="Search">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
+        </button>
+        <button class="icon cart" type="button" data-cart data-magnetic aria-label="Cart, 0 items">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 11.1a2 2 0 0 1-2 1.9H8.2a2 2 0 0 1-2-1.9L5 8Z"/><path d="M9 10V7a3 3 0 0 1 6 0v3"/></svg>
+          <span class="cart__n" data-cart-n aria-hidden="true">0</span>
+        </button>
+      </div>
+
+      <button class="nav__burger" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Menu">
+        <span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="top" aria-labelledby="hero-h">
+      <div class="hero__panel" aria-hidden="true"></div>
+
+      <div class="hero__copy">
+        <h1 class="hero__title" id="hero-h" aria-label="Slow Living"><span class="line">Slow</span> <span class="line">Living</span></h1>
+        <p class="hero__sub">Solid wood, real wool and hand-thrown clay — furniture that gets better the longer you keep it, at your door within a week.</p>
+        <a class="btn btn--light" data-magnetic href="#arrivals">
+          Shop now
+          <span class="btn__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>
+        <div class="proof">
+          <div class="proof__faces" aria-hidden="true">
+            <span class="face ph" data-ph="A1"><img src="/images/avatar-1.webp" alt="" width="400" height="400" loading="lazy" decoding="async"></span>
+            <span class="face ph" data-ph="A2"><img src="/images/avatar-2.webp" alt="" width="400" height="400" loading="lazy" decoding="async"></span>
+            <span class="face ph" data-ph="A3"><img src="/images/avatar-3.webp" alt="" width="400" height="400" loading="lazy" decoding="async"></span>
+          </div>
+          <p class="proof__text">
+            <strong><span data-count="12">12</span>K+</strong>
+            <small>Homes furnished</small>
+          </p>
+        </div>
+      </div>
+
+      <div class="hero__stage" id="hero-stage">
+        <div class="hero__floor" aria-hidden="true"></div>
+        <div class="hero__slot ph ph--spot is-on" id="hero-slot-0" role="tabpanel" aria-label="Fjell Lounge Chair" data-ph="HERO — CHAIR"><img src="/images/hero-chair.webp" alt="Fjell Lounge Chair in oak with a wool seat" width="344" height="344" loading="eager" fetchpriority="high" decoding="async"></div>
+        <div class="hero__slot ph ph--spot" id="hero-slot-1" role="tabpanel" aria-label="Glød Table Lamp" data-ph="HERO — LAMP"><img src="/images/hero-lamp.webp" alt="Glød Table Lamp with a linen shade" width="313" height="313" loading="lazy" decoding="async"></div>
+        <div class="hero__slot ph ph--spot" id="hero-slot-2" role="tabpanel" aria-label="Elv Stoneware Vase" data-ph="HERO — VASE"><img src="/images/hero-vase.webp" alt="Elv Stoneware Vase in a speckled glaze" width="342" height="342" loading="lazy" decoding="async"></div>
+        <div class="hero__slot ph ph--spot" id="hero-slot-3" role="tabpanel" aria-label="Myk Wool Throw" data-ph="HERO — THROW"><img src="/images/hero-throw.webp" alt="Myk Wool Throw, folded" width="557" height="557" loading="lazy" decoding="async"></div>
+        <div class="hero__slot ph ph--spot" id="hero-slot-4" role="tabpanel" aria-label="Rund Side Table" data-ph="HERO — SIDE TABLE"><img src="/images/hero-table.webp" alt="Rund Side Table in solid oak" width="306" height="306" loading="lazy" decoding="async"></div>
+        <img class="hero__fly" src="/images/hero-chair.webp" alt="" aria-hidden="true" width="344" height="344" loading="eager" decoding="async">
+        <p class="hero__tag" aria-live="polite"><span class="hero__tag-name">Fjell Lounge Chair</span><span class="hero__tag-price">$1,290</span></p>
+      </div>
+
+      <div class="rail" role="tablist" aria-label="Featured products" aria-orientation="vertical">
+        <button class="rail__item is-on" type="button" role="tab" aria-selected="true" aria-controls="hero-slot-0" aria-label="Fjell Lounge Chair, $1,290" data-name="Fjell Lounge Chair" data-price="$1,290">
+          <span class="ph ph--thumb" data-ph="HERO — CHAIR"><img src="/images/hero-chair.webp" alt="" width="344" height="344" loading="lazy" decoding="async"></span>
+        </button>
+        <button class="rail__item" type="button" role="tab" aria-selected="false" aria-controls="hero-slot-1" aria-label="Glød Table Lamp, $240" data-name="Glød Table Lamp" data-price="$240">
+          <span class="ph ph--thumb" data-ph="HERO — LAMP"><img src="/images/hero-lamp.webp" alt="" width="313" height="313" loading="lazy" decoding="async"></span>
+        </button>
+        <button class="rail__item" type="button" role="tab" aria-selected="false" aria-controls="hero-slot-2" aria-label="Elv Stoneware Vase, $86" data-name="Elv Stoneware Vase" data-price="$86">
+          <span class="ph ph--thumb" data-ph="HERO — VASE"><img src="/images/hero-vase.webp" alt="" width="342" height="342" loading="lazy" decoding="async"></span>
+        </button>
+        <button class="rail__item" type="button" role="tab" aria-selected="false" aria-controls="hero-slot-3" aria-label="Myk Wool Throw, $148" data-name="Myk Wool Throw" data-price="$148">
+          <span class="ph ph--thumb" data-ph="HERO — THROW"><img src="/images/hero-throw.webp" alt="" width="557" height="557" loading="lazy" decoding="async"></span>
+        </button>
+        <button class="rail__item" type="button" role="tab" aria-selected="false" aria-controls="hero-slot-4" aria-label="Rund Side Table, $340" data-name="Rund Side Table" data-price="$340">
+          <span class="ph ph--thumb" data-ph="HERO — SIDE TABLE"><img src="/images/hero-table.webp" alt="" width="306" height="306" loading="lazy" decoding="async"></span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ============ TICKER ============ -->
+    <section class="ticker" aria-hidden="true">
+      <div class="ticker__row">
+        <span>Free delivery over $150</span><i>✦</i>
+        <span>100-night home trial</span><i>✦</i>
+        <span>Made in small batches</span><i>✦</i>
+        <span>FSC-certified oak</span><i>✦</i>
+        <span>Ten-year frame warranty</span><i>✦</i>
+      </div>
+    </section>
+
+    <!-- ============ NEW ARRIVALS ============ -->
+    <section class="section arrivals" id="arrivals" aria-labelledby="arrivals-h">
+      <div class="wrap">
+        <div class="head">
+          <h2 id="arrivals-h" data-lines><span class="line">Fresh from</span> <span class="line">the workshop</span></h2>
+          <a class="btn btn--dark btn--sm" href="#categories">
+            See all arrivals
+            <span class="btn__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </a>
+        </div>
+
+        <div class="products">
+          <article class="product">
+            <div class="product__media ph ph--spot" data-ph="STOOL"><img src="/images/arr-stool.webp" alt="Stubbe Oak Stool" width="322" height="322" loading="lazy" decoding="async"></div>
+            <h3>Stubbe Oak Stool</h3>
+            <p class="product__price"><strong>$220</strong> <s><span class="sr">was </span>$260</s></p>
+            <p class="product__stock product__stock--low">8 left in stock</p>
+            <button class="product__add" type="button" data-add aria-label="Add Stubbe Oak Stool to cart">+</button>
+          </article>
+          <article class="product">
+            <div class="product__media ph ph--spot" data-ph="PENDANT"><img src="/images/arr-pendant.webp" alt="Sky Paper Pendant" width="395" height="395" loading="lazy" decoding="async"></div>
+            <h3>Sky Paper Pendant</h3>
+            <p class="product__price"><strong>$180</strong></p>
+            <p class="product__stock">15 left in stock</p>
+            <button class="product__add" type="button" data-add aria-label="Add Sky Paper Pendant to cart">+</button>
+          </article>
+          <article class="product">
+            <div class="product__media ph ph--spot" data-ph="CUSHION"><img src="/images/arr-cushion.webp" alt="Lin Linen Cushion" width="346" height="346" loading="lazy" decoding="async"></div>
+            <h3>Lin Linen Cushion</h3>
+            <p class="product__price"><strong>$58</strong> <s><span class="sr">was </span>$72</s></p>
+            <p class="product__stock">30 left in stock</p>
+            <button class="product__add" type="button" data-add aria-label="Add Lin Linen Cushion to cart">+</button>
+          </article>
+          <article class="product">
+            <div class="product__media ph ph--spot" data-ph="BOWL"><img src="/images/arr-bowl.webp" alt="Skål Ceramic Bowl" width="426" height="426" loading="lazy" decoding="async"></div>
+            <h3>Skål Ceramic Bowl</h3>
+            <p class="product__price"><strong>$44</strong></p>
+            <p class="product__stock">21 left in stock</p>
+            <button class="product__add" type="button" data-add aria-label="Add Skål Ceramic Bowl to cart">+</button>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CATEGORIES ============ -->
+    <section class="section cats" id="categories" aria-labelledby="cats-h">
+      <div class="wrap">
+        <h2 class="cats__h" id="cats-h" data-lines><span class="line">Browse by room and ritual</span></h2>
+      </div>
+      <div class="cats__viewport">
+        <div class="cats__row">
+          <a class="cat" href="#arrivals"><span class="ph ph--thumb" data-ph="HERO — CHAIR"><img src="/images/hero-chair.webp" alt="" width="344" height="344" loading="lazy" decoding="async"></span><span class="cat__label">Seating</span></a>
+          <a class="cat" href="#arrivals"><span class="ph ph--thumb" data-ph="HERO — LAMP"><img src="/images/hero-lamp.webp" alt="" width="313" height="313" loading="lazy" decoding="async"></span><span class="cat__label">Lighting</span></a>
+          <a class="cat" href="#arrivals"><span class="ph ph--thumb" data-ph="HERO — SIDE TABLE"><img src="/images/hero-table.webp" alt="" width="306" height="306" loading="lazy" decoding="async"></span><span class="cat__label">Tables</span></a>
+          <a class="cat" href="#arrivals"><span class="ph ph--thumb" data-ph="HERO — THROW"><img src="/images/hero-throw.webp" alt="" width="557" height="557" loading="lazy" decoding="async"></span><span class="cat__label">Throws</span></a>
+          <a class="cat" href="#arrivals"><span class="ph ph--thumb" data-ph="HERO — VASE"><img src="/images/hero-vase.webp" alt="" width="342" height="342" loading="lazy" decoding="async"></span><span class="cat__label">Vases</span></a>
+          <a class="cat" href="#arrivals"><span class="ph ph--thumb" data-ph="CUSHION"><img src="/images/arr-cushion.webp" alt="" width="346" height="346" loading="lazy" decoding="async"></span><span class="cat__label">Cushions</span></a>
+          <a class="cat" href="#arrivals"><span class="ph ph--thumb" data-ph="PENDANT"><img src="/images/arr-pendant.webp" alt="" width="395" height="395" loading="lazy" decoding="async"></span><span class="cat__label">Pendants</span></a>
+          <a class="cat" href="#arrivals"><span class="ph ph--thumb" data-ph="STOOL"><img src="/images/arr-stool.webp" alt="" width="322" height="322" loading="lazy" decoding="async"></span><span class="cat__label">Stools</span></a>
+          <a class="cat" href="#arrivals"><span class="ph ph--thumb" data-ph="BOWL"><img src="/images/arr-bowl.webp" alt="" width="426" height="426" loading="lazy" decoding="async"></span><span class="cat__label">Tableware</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ BEST SELLERS ============ -->
+    <section class="section loved" id="best" aria-labelledby="best-h">
+      <div class="wrap">
+        <div class="head">
+          <h2 id="best-h" data-lines><span class="line">The pieces</span> <span class="line">people keep</span></h2>
+          <a class="btn btn--dark btn--sm" href="#categories">
+            View all
+            <span class="btn__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </a>
+        </div>
+
+        <div class="loved__grid">
+          <article class="lcard">
+            <div class="lcard__mask">
+              <div class="lcard__media ph" data-ph="BEST — CHAIR"><img src="/images/best-chair.webp" alt="Fjell Lounge Chair by a window in a sunlit living room" width="825" height="1024" loading="lazy" decoding="async"></div>
+            </div>
+            <span class="lcard__badge">Best seller</span>
+            <div class="lcard__cap">
+              <h3>Fjell Lounge Chair</h3>
+              <p class="product__price"><strong>$1,290</strong> <s><span class="sr">was </span>$1,490</s></p>
+            </div>
+          </article>
+          <article class="lcard">
+            <div class="lcard__mask">
+              <div class="lcard__media ph" data-ph="BEST — THROW"><img src="/images/best-throw.webp" alt="Myk Wool Throw draped over a linen sofa" width="825" height="1024" loading="lazy" decoding="async"></div>
+            </div>
+            <span class="lcard__badge">Back in stock</span>
+            <div class="lcard__cap">
+              <h3>Myk Wool Throw</h3>
+              <p class="product__price"><strong>$148</strong> <s><span class="sr">was </span>$180</s></p>
+            </div>
+          </article>
+          <article class="lcard">
+            <div class="lcard__mask">
+              <div class="lcard__media ph" data-ph="BEST — LAMP"><img src="/images/best-lamp.webp" alt="Glød Table Lamp glowing on an oak sideboard" width="825" height="1024" loading="lazy" decoding="async"></div>
+            </div>
+            <span class="lcard__badge">Studio pick</span>
+            <div class="lcard__cap">
+              <h3>Glød Table Lamp</h3>
+              <p class="product__price"><strong>$240</strong></p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ IMMERSE ============ -->
+    <section class="immerse" aria-label="Built for slow days">
+      <div class="immerse__frame">
+        <div class="immerse__media ph" data-ph="INTERIOR"><img src="/images/immerse.webp" alt="A calm Scandinavian living room in afternoon light" width="1024" height="572" loading="lazy" decoding="async"></div>
+      </div>
+      <p class="immerse__words">
+        <span data-from="-1">Built</span>
+        <span data-from="1">for</span>
+        <span data-from="-1">slow days</span>
+      </p>
+    </section>
+
+    <!-- ============ WHY US ============ -->
+    <section class="section why" id="about" aria-labelledby="why-h">
+      <div class="wrap why__grid">
+        <div class="why__copy">
+          <h2 id="why-h" data-lines><span class="line">A better home</span> <span class="line">starts here</span></h2>
+          <div class="perks">
+            <div class="perk">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2.5 6.5h11v9.5h-11z"/><path d="M13.5 10h4l3.5 3.5V16h-7.5"/><circle cx="6.5" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg>
+              <h3>White-glove delivery</h3>
+              <p>Free on orders over $150. We carry it in, unwrap it and take the packaging away.</p>
+            </div>
+            <div class="perk">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/><path d="M17 4v3M15.5 5.5h3"/></svg>
+              <h3>100-night trial</h3>
+              <p>Live with it for a hundred nights. If it doesn't belong, we collect it at no cost.</p>
+            </div>
+            <div class="perk">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="2.5" y="5.5" width="19" height="13" rx="2"/><path d="M2.5 10h19M6.5 15h3"/></svg>
+              <h3>Flexible, secure payment</h3>
+              <p>Pay today or split it over four months. Every checkout is fully encrypted.</p>
+            </div>
+            <div class="perk">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+              <h3>Made to be repaired</h3>
+              <p>Solid wood frames, a ten-year warranty and spare parts for everything we sell.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="why__media">
+          <div class="why__big ph" data-ph="ROOM"><img src="/images/why-room.webp" alt="A bright bedroom with an oak bench and wool throw" width="825" height="1024" loading="lazy" decoding="async"></div>
+          <div class="why__small ph" data-ph="DETAIL"><img src="/images/why-detail.webp" alt="Close-up of a hand-cut oak joint" width="1024" height="1024" loading="lazy" decoding="async"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ REVIEWS ============ -->
+    <section class="section reviews" id="reviews" aria-labelledby="reviews-h">
+      <div class="wrap">
+        <h2 class="reviews__h" id="reviews-h" data-lines><span class="line">Loved in homes</span> <span class="line">near and far</span></h2>
+
+        <div class="quotes">
+          <figure class="quote">
+            <div class="quote__top"><span class="quote__mark" aria-hidden="true">”</span><span class="quote__n" aria-hidden="true">01</span></div>
+            <blockquote><p>The Fjell arrived in five days and the crew set it up by the window. I didn't expect a chair to change how I spend my evenings.</p></blockquote>
+            <figcaption class="quote__who">
+              <span class="quote__avatar ph" data-ph="A1"><img src="/images/avatar-1.webp" alt="" width="400" height="400" loading="lazy" decoding="async"></span>
+              <span class="quote__id"><strong>Maren T. Lund</strong><small>Ceramicist, Bergen</small></span>
+            </figcaption>
+          </figure>
+          <figure class="quote">
+            <div class="quote__top"><span class="quote__mark" aria-hidden="true">”</span><span class="quote__n" aria-hidden="true">02</span></div>
+            <blockquote><p>Everything felt careful, from the website to the paper packaging. The throw is heavier and softer than the photos suggest.</p></blockquote>
+            <figcaption class="quote__who">
+              <span class="quote__avatar ph" data-ph="A2"><img src="/images/avatar-2.webp" alt="" width="400" height="400" loading="lazy" decoding="async"></span>
+              <span class="quote__id"><strong>Tomás R. Vidal</strong><small>Sound designer, Porto</small></span>
+            </figcaption>
+          </figure>
+          <figure class="quote">
+            <div class="quote__top"><span class="quote__mark" aria-hidden="true">”</span><span class="quote__n" aria-hidden="true">03</span></div>
+            <blockquote><p>I treated the trial as permission to be fussy. I kept every piece. The lamp gives the warmest light in the apartment.</p></blockquote>
+            <figcaption class="quote__who">
+              <span class="quote__avatar ph" data-ph="A3"><img src="/images/avatar-3.webp" alt="" width="400" height="400" loading="lazy" decoding="async"></span>
+              <span class="quote__id"><strong>Aiko N. Berg</strong><small>Architect, Stockholm</small></span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CTA ============ -->
+    <section class="cta" id="cta" aria-labelledby="cta-h">
+      <div class="cta__bg ph" data-ph="CTA"><img src="/images/cta.webp" alt="" width="1024" height="572" loading="lazy" decoding="async"></div>
+      <div class="cta__card">
+        <h2 id="cta-h" data-lines><span class="line">Own less, choose well,</span> <span class="line">keep it longer</span></h2>
+        <p>Not sure what fits your space? Send us a photo and a KVIST stylist will reply within a day with three pieces that belong there — free.</p>
+        <a class="btn btn--dark" data-magnetic href="#contact">
+          Talk to a stylist
+          <span class="btn__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer" id="contact" aria-labelledby="footer-h">
+    <div class="wrap">
+      <div class="footer__top">
+        <div class="footer__talk">
+          <h2 id="footer-h">Let's talk</h2>
+          <a class="footer__mail" href="mailto:hello@kvist.home">hello@kvist.home</a>
+          <a class="footer__tel" href="tel:+46852031470">+46 8 520 314 70</a>
+        </div>
+        <nav class="footer__links" aria-label="Footer">
+          <ul>
+            <li><a href="#top">Home</a></li>
+            <li><a href="#arrivals">New arrivals</a></li>
+            <li><a href="#categories">Categories</a></li>
+          </ul>
+          <ul>
+            <li><a href="#best">Best sellers</a></li>
+            <li><a href="#about">About us</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+        <div class="footer__img ph" data-ph="STUDIO"><img src="/images/footer.webp" alt="The KVIST workshop with oak boards stacked by the window" width="1024" height="687" loading="lazy" decoding="async"></div>
+      </div>
+
+      <div class="footer__word" aria-hidden="true"><span>K</span><span>V</span><span>I</span><span>S</span><span>T</span></div>
+
+      <div class="footer__bottom">
+        <ul class="footer__social">
+          <li><a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg></a></li>
+          <li><a href="#" aria-label="Pinterest"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="m10.6 20.6 1.9-8.1"/><path d="M9.6 13.8c-.7-2.9 1.2-6 4-6 2.1 0 3.4 1.5 3.4 3.4 0 2.5-1.4 4.6-3.3 4.6-1.1 0-1.8-.8-1.6-1.8"/></svg></a></li>
+          <li><a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10.5V17M8 7.5h.01M12 17v-6.5M12 13.5c0-1.8 1-3 2.6-3 1.5 0 2.4 1 2.4 2.9V17"/></svg></a></li>
+        </ul>
+        <p class="footer__legal">© 2026 KVIST Home. Demo site — all names and copy are fictional.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
