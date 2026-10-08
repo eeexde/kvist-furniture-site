@@ -1,4 +1,6 @@
 // Vite config: serves api/*.js as dev endpoints (same handlers Vercel runs in production).
+import { existsSync } from 'node:fs'
+import path from 'node:path'
 import { defineConfig, loadEnv } from 'vite'
 
 function apiDev() {
@@ -12,12 +14,7 @@ function apiDev() {
       server.middlewares.use('/api', async (req, res, next) => {
         const name = (req.url || '').split('?')[0].replace(/^\/+/, '')
         if (!/^[a-z0-9-]+$/.test(name)) return next()
-        let mod
-        try {
-          mod = await server.ssrLoadModule(`/api/${name}.js`)
-        } catch {
-          return next()
-        }
+        if (!existsSync(path.join(server.config.root, 'api', `${name}.js`))) return next()
         res.status = (code) => {
           res.statusCode = code
           return res
@@ -26,6 +23,14 @@ function apiDev() {
           res.setHeader('Content-Type', 'application/json')
           res.end(JSON.stringify(obj))
           return res
+        }
+        let mod
+        try {
+          mod = await server.ssrLoadModule(`/api/${name}.js`)
+        } catch (err) {
+          server.ssrFixStacktrace(err)
+          console.error(err)
+          return res.status(500).json({ error: 'Server error' })
         }
         try {
           await mod.default(req, res)

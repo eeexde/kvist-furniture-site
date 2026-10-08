@@ -5,6 +5,8 @@ import { priceItems, PricingError } from './_lib/pricing.js'
 
 const MAX_BODY = 10_000
 
+class BodyTooLargeError extends Error {}
+
 async function readBody(req) {
   const b = req.body
   if (b !== undefined && b !== null) {
@@ -16,7 +18,7 @@ async function readBody(req) {
   let size = 0
   for await (const chunk of req) {
     size += chunk.length
-    if (size > MAX_BODY) throw new Error('Body too large')
+    if (size > MAX_BODY) throw new BodyTooLargeError('Body too large')
     chunks.push(chunk)
   }
   const text = Buffer.concat(chunks).toString('utf8')
@@ -37,7 +39,8 @@ export function createHandler({ getStripe }) {
     let body
     try {
       body = await readBody(req)
-    } catch {
+    } catch (err) {
+      if (err instanceof BodyTooLargeError) return res.status(413).json({ error: 'Request body too large' })
       return res.status(400).json({ error: 'Invalid request body' })
     }
 

@@ -104,6 +104,25 @@ describe('POST /api/create-payment-intent', () => {
     const res = mockRes()
     await createHandler(s)(req, res)
     expect(res.statusCode).toBe(200)
+    expect(res.body.amount).toBe(8800)
+  })
+
+  it('413 on an oversized streamed body and never calls Stripe', async () => {
+    const s = fakeStripe()
+    const req = Readable.from([Buffer.alloc(10_001, 'a')])
+    req.method = 'POST'
+    const res = mockRes()
+    await createHandler(s)(req, res)
+    expect(res.statusCode).toBe(413)
+    expect(s.create).not.toHaveBeenCalled()
+  })
+
+  it('400 on an invalid-JSON streamed body', async () => {
+    const req = Readable.from([Buffer.from('{bad')])
+    req.method = 'POST'
+    const res = mockRes()
+    await createHandler(fakeStripe())(req, res)
+    expect(res.statusCode).toBe(400)
   })
 
   it('500 with a generic message when Stripe fails', async () => {
