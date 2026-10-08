@@ -140,7 +140,7 @@ function onCartChange() {
   clearTimeout(refreshTimer)
   if (!PK.startsWith('pk_test_')) return
   if (busy) pendingRefresh = true // never destroy the element mid-confirmation
-  else refreshTimer = setTimeout(setupPayment, 300)
+  else refreshTimer = setTimeout(refreshPayment, 300)
 }
 
 /* ---------- summary ---------- */
@@ -226,6 +226,11 @@ function bindForm() {
 }
 
 /* ---------- payment ---------- */
+
+function refreshPayment() {
+  if (busy) pendingRefresh = true
+  else setupPayment()
+}
 
 function onRetry() {
   if (held) return location.reload()
@@ -341,6 +346,12 @@ async function onSubmit(e) {
     return
   }
 
+  if (refreshTimer) {
+    // A debounced refresh must not destroy the element mid-confirmation.
+    clearTimeout(refreshTimer)
+    refreshTimer = 0
+    pendingRefresh = true
+  }
   setBusy(true)
   saveSnapshot()
   let error
@@ -410,7 +421,12 @@ async function handleReturn(clientSecret) {
         /* ignore */
       }
     }
-    renderDone(view, paymentIntent, snap)
+    try {
+      renderDone(view, paymentIntent, snap)
+    } catch (err) {
+      console.error('[KVIST] Could not render the order summary.', err)
+      renderDoneFallback(paymentIntent)
+    }
   } finally {
     returning = false
   }
@@ -424,6 +440,20 @@ function readCleared() {
   }
 }
 
+function renderDoneFallback(pi) {
+  try {
+    $('[data-done-ref]', page).textContent = pi.id ? `Order ${orderRef(pi.id)}` : ''
+    $('[data-done-title]', page).textContent = 'Thank you'
+    $('[data-done-lead]', page).textContent = 'Your test payment went through.'
+    $('[data-done-items]', page).hidden = true
+    $('[data-done-ship]', page).textContent = '—'
+    $('[data-done-total]', page).textContent = typeof pi.amount === 'number' ? formatPrice(pi.amount) : '—'
+  } catch (err) {
+    console.error('[KVIST] Fallback render failed.', err)
+  }
+  show('done')
+}
+
 function renderDone(view, pi, snap) {
   $('[data-done-ref]', page).textContent = `Order ${orderRef(pi.id)}`
   $('[data-done-title]', page).textContent = view === 'success' ? 'Thank you' : 'Almost there'
@@ -435,7 +465,7 @@ function renderDone(view, pi, snap) {
 
   const ship = pi.shipping
   const addr = ship && ship.address
-  $('[data-done-ship]', page).textContent = ship
+  $('[data-done-ship]', page).textContent = ship && addr
     ? [ship.name, addr.line1, addr.line2, `${addr.city} ${addr.postal_code}`, COUNTRIES.find((c) => c.code === addr.country)?.name || addr.country]
         .filter(Boolean)
         .join('\n')
