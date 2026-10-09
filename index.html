@@ -39,6 +39,7 @@
           <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 11.1a2 2 0 0 1-2 1.9H8.2a2 2 0 0 1-2-1.9L5 8Z"/><path d="M9 10V7a3 3 0 0 1 6 0v3"/></svg>
           <span class="cart__n" data-cart-n aria-hidden="true">0</span>
         </button>
+        <p class="sr" aria-live="polite" data-cart-live></p>
       </div>
 
       <button class="nav__burger" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Menu">
@@ -131,28 +132,28 @@
             <h3>Stubbe Oak Stool</h3>
             <p class="product__price"><strong>$220</strong> <s><span class="sr">was </span>$260</s></p>
             <p class="product__stock product__stock--low">8 left in stock</p>
-            <button class="product__add" type="button" data-add aria-label="Add Stubbe Oak Stool to cart">+</button>
+            <button class="product__add" type="button" data-add data-id="stubbe-stool" aria-label="Add Stubbe Oak Stool to cart">+</button>
           </article>
           <article class="product">
             <div class="product__media ph ph--spot" data-ph="PENDANT"><img src="/images/arr-pendant.webp" alt="Sky Paper Pendant" width="395" height="395" loading="lazy" decoding="async"></div>
             <h3>Sky Paper Pendant</h3>
             <p class="product__price"><strong>$180</strong></p>
             <p class="product__stock">15 left in stock</p>
-            <button class="product__add" type="button" data-add aria-label="Add Sky Paper Pendant to cart">+</button>
+            <button class="product__add" type="button" data-add data-id="sky-pendant" aria-label="Add Sky Paper Pendant to cart">+</button>
           </article>
           <article class="product">
             <div class="product__media ph ph--spot" data-ph="CUSHION"><img src="/images/arr-cushion.webp" alt="Lin Linen Cushion" width="346" height="346" loading="lazy" decoding="async"></div>
             <h3>Lin Linen Cushion</h3>
             <p class="product__price"><strong>$58</strong> <s><span class="sr">was </span>$72</s></p>
             <p class="product__stock">30 left in stock</p>
-            <button class="product__add" type="button" data-add aria-label="Add Lin Linen Cushion to cart">+</button>
+            <button class="product__add" type="button" data-add data-id="lin-cushion" aria-label="Add Lin Linen Cushion to cart">+</button>
           </article>
           <article class="product">
             <div class="product__media ph ph--spot" data-ph="BOWL"><img src="/images/arr-bowl.webp" alt="Skål Ceramic Bowl" width="426" height="426" loading="lazy" decoding="async"></div>
             <h3>Skål Ceramic Bowl</h3>
             <p class="product__price"><strong>$44</strong></p>
             <p class="product__stock">21 left in stock</p>
-            <button class="product__add" type="button" data-add aria-label="Add Skål Ceramic Bowl to cart">+</button>
+            <button class="product__add" type="button" data-add data-id="skal-bowl" aria-label="Add Skål Ceramic Bowl to cart">+</button>
           </article>
         </div>
       </div>
@@ -198,6 +199,7 @@
             <div class="lcard__cap">
               <h3>Fjell Lounge Chair</h3>
               <p class="product__price"><strong>$1,290</strong> <s><span class="sr">was </span>$1,490</s></p>
+              <button class="product__add" type="button" data-add data-id="fjell-chair" aria-label="Add Fjell Lounge Chair to cart">+</button>
             </div>
           </article>
           <article class="lcard">
@@ -208,6 +210,7 @@
             <div class="lcard__cap">
               <h3>Myk Wool Throw</h3>
               <p class="product__price"><strong>$148</strong> <s><span class="sr">was </span>$180</s></p>
+              <button class="product__add" type="button" data-add data-id="myk-throw" aria-label="Add Myk Wool Throw to cart">+</button>
             </div>
           </article>
           <article class="lcard">
@@ -218,6 +221,7 @@
             <div class="lcard__cap">
               <h3>Glød Table Lamp</h3>
               <p class="product__price"><strong>$240</strong></p>
+              <button class="product__add" type="button" data-add data-id="glod-lamp" aria-label="Add Glød Table Lamp to cart">+</button>
             </div>
           </article>
         </div>
@@ -326,8 +330,7 @@
       <div class="footer__top">
         <div class="footer__talk">
           <h2 id="footer-h">Let's talk</h2>
-          <a class="footer__mail" href="mailto:hello@kvist.home">hello@kvist.home</a>
-          <a class="footer__tel" href="tel:+46852031470">+46 8 520 314 70</a>
+          <a class="footer__mail" href="mailto:pasaylo.ed03@gmail.com">pasaylo.ed03@gmail.com</a>
         </div>
         <nav class="footer__links" aria-label="Footer">
           <ul>
@@ -348,14 +351,46 @@
 
       <div class="footer__bottom">
         <ul class="footer__social">
-          <li><a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg></a></li>
-          <li><a href="#" aria-label="Pinterest"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="m10.6 20.6 1.9-8.1"/><path d="M9.6 13.8c-.7-2.9 1.2-6 4-6 2.1 0 3.4 1.5 3.4 3.4 0 2.5-1.4 4.6-3.3 4.6-1.1 0-1.8-.8-1.6-1.8"/></svg></a></li>
-          <li><a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10.5V17M8 7.5h.01M12 17v-6.5M12 13.5c0-1.8 1-3 2.6-3 1.5 0 2.4 1 2.4 2.9V17"/></svg></a></li>
+          <li><a href="https://github.com/eeexde" target="_blank" rel="noopener noreferrer" aria-label="GitHub" title="GitHub"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li>
+          <li><a href="https://www.edrianpasaylo.com/" target="_blank" rel="noopener noreferrer" aria-label="Portfolio" title="Portfolio"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18"/></svg></a></li>
+          <li><a href="https://www.onlinejobs.ph/jobseekers/info/4228054" target="_blank" rel="noopener noreferrer" aria-label="OnlineJobs.ph profile" title="OnlineJobs.ph"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg></a></li>
+          <li><a href="mailto:pasaylo.ed03@gmail.com" aria-label="Email" title="Email"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a></li>
         </ul>
         <p class="footer__legal">© 2026 KVIST Home. Demo site — all names and copy are fictional.</p>
       </div>
     </div>
   </footer>
+
+  <!-- ============ CART DRAWER ============ -->
+  <div class="drawer" data-drawer hidden>
+    <div class="drawer__scrim" data-drawer-close></div>
+    <aside class="drawer__panel" data-lenis-prevent role="dialog" aria-modal="true" aria-labelledby="drawer-h">
+      <div class="drawer__head">
+        <h2 class="drawer__h" id="drawer-h">Your cart</h2>
+        <button class="drawer__close" type="button" data-drawer-close aria-label="Close cart">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg>
+        </button>
+      </div>
+      <ul class="drawer__list" aria-label="Items in your cart"></ul>
+      <div class="drawer__empty" hidden>
+        <p>Your cart is empty.</p>
+        <button class="btn btn--dark btn--sm" type="button" data-drawer-close>
+          Keep browsing
+          <span class="btn__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </button>
+      </div>
+      <div class="drawer__foot">
+        <dl class="drawer__sum">
+          <div><dt>Subtotal</dt><dd data-drawer-subtotal>$0</dd></div>
+          <div><dt>Delivery</dt><dd>Free</dd></div>
+        </dl>
+        <a class="btn btn--dark drawer__go" href="/checkout.html" data-magnetic>
+          Checkout
+          <span class="btn__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>
+      </div>
+    </aside>
+  </div>
 
   <script type="module" src="/src/main.js"></script>
 </body>

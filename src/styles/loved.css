@@ -71,3 +71,12 @@
   .lcard .lcard__mask,
   .lcard:first-child .lcard__mask { aspect-ratio: 4 / 4.4; }
 }
+
+/* ---- Add to cart (shares .product__add look) -------------------------- */
+.lcard__cap .product__price { margin-left: auto; }
+.lcard__cap .product__add {
+  position: static;
+  flex: none;
+  align-self: center;
+}
+.lcard:hover .product__add { rotate: 90deg; }

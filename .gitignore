@@ -3,3 +3,5 @@ dist
 _source-images
 .claude/
 Thumbs.db
+.env*
+!.env.example

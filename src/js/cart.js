@@ -1,19 +1,25 @@
 // Fly-to-cart: clone the product image (or its placeholder box) and arc it into the header cart.
+// The cart itself lives in store.js; this module animates adds and keeps the header counter in sync.
 import { gsap } from 'gsap'
 import { $, ensureTransformable } from './utils.js'
 import { showHeader } from './nav.js'
+import { cart } from './store.js'
+import { PRODUCTS, MAX_QTY } from '../data/products.js'
 
-let count = 0
 let cartBtn = null
 let countEl = null
+let liveEl = null
 let reducedMode = false
 
 export function initCart({ reduced } = {}) {
   reducedMode = !!reduced
   cartBtn = $('[data-cart]')
   countEl = $('[data-cart-n]')
+  liveEl = $('[data-cart-live]')
   if (!reducedMode) ensureTransformable([countEl])
-  if (cartBtn && !cartBtn.getAttribute('aria-label')) cartBtn.setAttribute('aria-label', 'Cart, 0 items')
+
+  render(false)
+  cart.onChange((change) => render(change.type === 'add'))
 
   document.addEventListener('click', (e) => {
     const btn = e.target.closest && e.target.closest('[data-add]')
@@ -23,19 +29,35 @@ export function initCart({ reduced } = {}) {
   })
 }
 
+function cartLabel() {
+  const n = cart.count()
+  return `Cart, ${n} item${n === 1 ? '' : 's'}`
+}
+
+function announce(msg) {
+  if (!liveEl) return
+  liveEl.textContent = ''
+  requestAnimationFrame(() => (liveEl.textContent = msg))
+}
+
 function addToCart(btn) {
-  if (reducedMode || !cartBtn) {
-    increment()
+  const id = btn.dataset.id
+  const product = PRODUCTS[id]
+  if (!product) return
+  if (cart.qtyOf(id) >= MAX_QTY) {
+    announce(`${product.name}: maximum of ${MAX_QTY} per order.`)
     return
   }
-  const card = btn.closest('.product')
-  const media = card && $('.product__media', card)
-  if (!media) {
-    increment()
-    return
+  const commit = () => {
+    if (cart.add(id)) announce(`Added ${product.name}. ${cartLabel()}.`)
   }
+
+  if (reducedMode || !cartBtn) return commit()
+  const card = btn.closest('.product, .lcard')
+  const media = card && $('.product__media, .lcard__media', card)
+  if (!media) return commit()
   showHeader()
-  fly(media)
+  fly(media, commit)
 }
 
 function makeClone(media) {
@@ -83,7 +105,7 @@ function cartCentre() {
   return { x: r.left + r.width / 2, y: r.top + r.height / 2 - Math.min(0, shift) }
 }
 
-function fly(media) {
+function fly(media, onLand) {
   const { clone, rect } = makeClone(media)
   const to = cartCentre()
   const dx = to.x - (rect.left + rect.width / 2)
@@ -94,7 +116,7 @@ function fly(media) {
     .timeline({
       onComplete: () => {
         clone.remove()
-        increment()
+        onLand()
       },
     })
     .set(clone, { transformOrigin: '50% 50%' })
@@ -104,13 +126,14 @@ function fly(media) {
     .to(clone, { opacity: 0, duration: 0.12, ease: 'none' }, d - 0.12)
 }
 
-function increment() {
-  count += 1
-  if (countEl) countEl.textContent = String(count)
+/** Sync counter + label from the store; `pop` plays the add feedback. */
+function render(pop) {
+  const n = cart.count()
+  if (countEl) countEl.textContent = String(n)
   if (!cartBtn) return
-  cartBtn.classList.add('has-items')
-  cartBtn.setAttribute('aria-label', `Cart, ${count} item${count === 1 ? '' : 's'}`)
-  if (reducedMode) return
+  cartBtn.classList.toggle('has-items', n > 0)
+  cartBtn.setAttribute('aria-label', cartLabel())
+  if (!pop || reducedMode) return
 
   if (countEl) {
     gsap.fromTo(countEl, { scale: 1.8 }, { scale: 1, duration: 0.9, ease: 'elastic.out(1, .4)', overwrite: 'auto' })

@@ -1,7 +1,7 @@
 # 3. App Flow Document — KVIST
 
 ## 1. Overview
-This doc maps what happens when someone clicks and which section comes next. KVIST is one page. "Navigation" means smooth-scrolling between sections, plus a few in-place interactions (hero rail, add to cart, burger menu). §6 holds the **DOM & class contract**. Markup, CSS and JS must all follow it exactly, because they are built in parallel.
+This doc maps what happens when someone clicks and which section comes next. KVIST is a landing page plus a checkout page (`/checkout.html`). "Navigation" means smooth-scrolling between sections, plus a few in-place interactions (hero rail, add to cart, burger menu). §6 holds the **DOM & class contract**. Markup, CSS and JS must all follow it exactly, because they are built in parallel.
 
 ## 2. Pages & Screens
 | Page / Section | Route / Anchor | Purpose | Auth required? |
@@ -17,6 +17,7 @@ This doc maps what happens when someone clicks and which section comes next. KVI
 | Reviews | `/#reviews` | 3 testimonials | No |
 | CTA | `/#cta` | Stylist offer, contact button | No |
 | Footer / Contact | `/#contact` | Email, phone, links, wordmark | No |
+| Checkout | `/checkout.html` | Contact, delivery, payment, order summary, success | No |
 
 Nav links (desktop and burger): Home `#top`, Shop `#arrivals`, Best sellers `#best`, About us `#about`, Contact `#contact`.
 
@@ -40,7 +41,16 @@ Result: the active thumb has `is-on` and `aria-selected="true"`.
 2. A clone of the product image flies to the header cart icon (x linear, y `back.in`, scales to 0.1, rotates 28°, fades at the end; ~0.9s).
 3. The clone is removed, the cart counter increments with an elastic pop, and the cart icon wiggles. `aria-label` becomes "Cart, 1 item".
 
-Result: the counter shows 1. Nothing persists on reload (by design).
+Result: the counter shows 1. The cart persists in localStorage (`kvist-cart`) across reloads and tabs.
+
+### Journey: Checkout
+1. The user clicks the cart icon, which opens the cart drawer (also reachable at `/?cart=open`).
+2. The user adjusts qty (1-10) or removes lines, then clicks "Checkout" (to `/checkout.html`).
+3. The user fills contact and delivery fields, then pays through the Stripe Payment Element (test mode, card 4242 4242 4242 4242).
+4. Stripe confirms the payment, with a 3DS challenge if required, and returns to `/checkout.html?payment_intent=...`.
+5. The success view shows "Order KV-XXXXXXXX" and the cart is cleared (once per PaymentIntent).
+
+Result: reloading the success URL shows the success view again. A failed intent returns to the form with values prefilled.
 
 ### Journey: Jump via nav
 1. The user clicks "Best sellers".
@@ -76,7 +86,7 @@ flowchart TD
 |---|---|---|---|
 | Any image slot | n/a | `.ph` gradient + mono label stays visible, the `<img>` has `opacity:0` and gets class `is-loaded` on `load` (fades in) | `error` event: the img is removed and the placeholder stays. No broken-image icon. |
 | Hero intro | — | Title, copy and rail are hidden only while `html.js` is set. Intro starts after `document.fonts.ready` + hero img load, or a 2.5s timeout, whichever comes first | If GSAP throws, a `try/catch` removes `html.js` so all content shows |
-| Cart | Counter shows `0`, no `has-items` class | — | — |
+| Cart | Counter shows `0`, no `has-items` class. Drawer and checkout show an empty state. | Checkout keeps Pay disabled until the payment form is ready | Setup failures show a notice with "Try again"; "couldn't confirm" notice (URL and cart kept) if the result can't be checked |
 | Reduced motion | — | No intro. Everything is visible immediately and counters are set to their final value | — |
 | Resize | Width change triggers `ScrollTrigger.refresh()`. Height-only changes (mobile URL bar) are ignored | — | — |
 | Hash on load (`/#best`) | — | After `load`, jump to the anchor without animation | — |
@@ -94,6 +104,10 @@ header.nav[data-nav]
     button.icon.search[aria-label="Search"]
     button.icon.cart[data-cart][data-magnetic] > svg + span.cart__n[data-cart-n] "0"
   button.nav__burger[aria-expanded][aria-controls="nav-links"]
+[data-drawer]                              — cart drawer (scrim + panel)
+  .drawer__panel[role="dialog"][aria-modal="true"]
+    button[data-drawer-close]
+    [data-drawer-subtotal]
 main#main
   section.hero#top
     .hero__panel                           — green panel, JS scaleX 0→1 (transform-origin left)
@@ -114,7 +128,7 @@ main#main
     .products > article.product ×4
       .product__media.ph.ph--spot[data-ph] > img
       h3 ; .product__price (strong + optional s) ; .product__stock
-      button.product__add[data-add][aria-label="Add … to cart"] "+"
+      button.product__add[data-add][data-id][aria-label="Add … to cart"] "+"   — same hooks on the 3 best-seller cards; [data-cart-live] is a polite live region
   section.section.cats#categories
     h2.cats__h[data-lines] > span.line
     .cats__viewport > .cats__row > a.cat ×9 > .ph.ph--thumb > img + span label
@@ -150,3 +164,13 @@ footer.footer#contact
 - `.is-in` (product) — the product card has finished its entrance.
 - `pin-h` (html) — pinned/horizontal desktop mode is active.
 - `.lenis*` — added by Lenis itself.
+
+### Checkout page (`/checkout.html`)
+```
+[data-checkout]                            — page root
+  [data-view="empty"|"form"|"done"]        — one visible at a time
+  form[data-form]                          — contact + delivery fields
+    #payment-element                       — Stripe Payment Element
+    button[data-pay]
+    [data-pay-notice][role="status"]
+```

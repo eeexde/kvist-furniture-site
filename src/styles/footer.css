@@ -38,19 +38,6 @@
 }
 .footer__mail:hover { text-decoration-color: var(--c-ochre); }
 
-.footer__tel {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  margin-top: 6px;
-  color: var(--c-cream-muted);
-  font: 500 var(--fs-small) / 1 var(--font-mono);
-  letter-spacing: .08em;
-  text-decoration: none;
-  transition: color .3s var(--ease-out);
-}
-.footer__tel:hover { color: var(--c-cream); }
-
 /* ---- Links ------------------------------------------------------------ */
 .footer__links {
   display: grid;

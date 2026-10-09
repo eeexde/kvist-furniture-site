@@ -2,7 +2,7 @@
 
 **Assumptions** (correct any that are wrong)
 - Brand is an invented, original Scandinavian furniture/homeware label called **KVIST** ("twig" in Norwegian). All copy is original. Layout and motion follow a reference template, but its code, text and brand are not copied.
-- Single landing page. Nav links scroll to sections. No real shop, cart or checkout. "Add to cart" only plays an animation and bumps a counter.
+- Landing page plus a checkout page. Cart persists in localStorage; payments run through Stripe in test mode only (portfolio demo).
 - Images come from Google Nano Banana (Gemini image) prompts the owner generates. Until then, every image slot shows a styled placeholder with a label.
 - Contact is `mailto:` / `tel:` links only. No form backend.
 - English only, USD prices.
@@ -46,10 +46,11 @@ Make a strong first impression that sends visitors to "Shop now" or "Contact us"
 | Line reveals | All section headings with `data-lines` | Each line slides up from yPercent 110 with a 2° rotation on enter, staggered 0.1s | Must |
 | Image placeholders | `.ph` wrapper with `data-ph` label | A missing image shows a tinted gradient block with a mono label (e.g. "HERO — CHAIR"). The real image fades in on load. | Must |
 | Reduced motion | `prefers-reduced-motion` | No Lenis, no pin, no intro. Everything is visible at once, and counters jump to their final value. | Must |
+| Cart drawer + checkout | Drawer from cart icon (qty, remove, subtotal), /checkout.html with contact, delivery, Stripe Payment Element, success view | Drawer slides in, rows stagger; checkout headings line-rise, blocks fade up, success thumbnails bounce | Must |
 | Skip link | "Skip to content" | Visible on focus and jumps to `#main` | Must |
 
 ## 5. Out of Scope (v1)
-- Real cart, checkout, payments, product detail pages
+- Live payments, order storage, inventory, product detail pages
 - Search functionality (icon only, no results)
 - CMS, blog, user accounts
 - Contact form backend (mailto only)
